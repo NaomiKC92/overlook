@@ -1,6 +1,90 @@
 /* This is an example of using Sass, otherwise plain CSS works too*/
-$primary-background: pink;
+@import 'variables';
+@import 'mixins';
+
+* {
+  font-family: 'Didact Gothic', sans-serif;
+}
+
 
 body {
-  background-color: $primary-background;
+  background: url('../images/hogwarts-light.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+h1 {
+  font-family: 'Cinzel', serif;
+  font-weight: 400;
+  font-size: 250%;
+  color: $title-color;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.login-screen {
+  height: 1000px;
+  width: 1000px;
+  color: $title-color;
+}
+
+.login-form {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  font-size: 130%;
+  height: 20%;
+  justify-content: space-around;
+  width: 40%;
+  margin-left: 60px;
+}
+
+.login-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-label {
+  padding: 4px;
+}
+
+input {
+  border: 2px solid $dark-olive-color;
+  color: $dark-olive-color;
+  border-radius: 3px;
+  border: 3px solid $dark-blue-bg;
+  padding: 5px;
+  height: 30px;
+  font-size: 87%;
+}
+
+.login-btns {
+  margin-top: 30px;
+  background-color: $dark-olive-color;
+  border: 3px solid $dark-blue-bg;
+  border-radius: 3px;
+  color: $title-color;
+  height: 40px;
+  width: 185px;
+  font-size: 87%;
+}
+
+input,
+::placeholder {
+  color: $dark-olive-color;
+}
+
+.customer-view {
+  background-color: aquamarine;
+  height: 1000px;
+  width: 1000px;
+}
+
+.manager-view {
+  background-color: #000;
+  height: 1000px;
+  width: 1000px;
 }
