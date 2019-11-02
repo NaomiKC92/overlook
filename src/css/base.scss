@@ -18,6 +18,7 @@ h1 {
   font-weight: 400;
   font-size: 250%;
   color: $title-color;
+  padding: 10px;
 }
 
 button:hover {
@@ -37,14 +38,15 @@ button:hover {
   flex-direction: row;
   font-size: 130%;
   height: 20%;
-  justify-content: space-around;
-  width: 40%;
+  justify-content: space-between;
+  width: 42%;
   margin-left: 60px;
 }
 
 .login-block {
   display: flex;
   flex-direction: column;
+  width: 185px;
 }
 
 .login-label {
@@ -52,7 +54,6 @@ button:hover {
 }
 
 input {
-  border: 2px solid $dark-olive-color;
   color: $dark-olive-color;
   border-radius: 3px;
   border: 3px solid $dark-blue-bg;
@@ -67,8 +68,8 @@ input {
   border: 3px solid $dark-blue-bg;
   border-radius: 3px;
   color: $title-color;
-  height: 40px;
-  width: 185px;
+  height: 45px;
+  width: 100%;
   font-size: 87%;
 }
 
@@ -84,7 +85,8 @@ input,
 }
 
 .manager-view {
-  background-color: #000;
-  height: 1000px;
-  width: 1000px;
+  background-color: $dark-olive-color;
+  opacity: 90%;
+  border: 3px solid $title-color;
+  height: 100vh;
 }
