@@ -1,7 +1,3 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you import jQuery into a JS file if you use jQuery in that file
 import $ from 'jquery';
 
 // An example of how you tell webpack to use a CSS (SCSS) file
@@ -19,10 +15,6 @@ $('.manager-view').hide();
 $('#manager-login-btn').click(directToChosenPage);
 $('#customer-login-btn').click(directToChosenPage);
 
-// function getLoginInfo() {
-//   if($('#email-input').length > 0 && $('#password-input').length > 0) {
-//   } 
-// }
 
 function directToChosenPage(event) {
   event.preventDefault();

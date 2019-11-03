@@ -79,9 +79,10 @@ input,
 }
 
 .customer-view {
-  background-color: aquamarine;
-  height: 1000px;
-  width: 1000px;
+  background-color: $dark-blue-bg;
+  opacity: 90%;
+  border: 3px solid $title-color;
+  height: 100vh;
 }
 
 .manager-view {

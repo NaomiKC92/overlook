@@ -363,6 +363,7 @@ const testData = {
       costPerNight: 372.85
     }
   ],
+  
   bookings: [
     {
       userID: 1,
@@ -515,6 +516,8 @@ const testData = {
       roomNumber: 4
     }
   ],
+
+  
   roomServiceOrders: [
     {
       userID: 1,
