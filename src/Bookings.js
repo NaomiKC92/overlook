@@ -42,7 +42,6 @@ class Bookings {
     return this.data.roomServiceOrders.reduce( (acc, order) => {
       if(order.date === date) {
         acc += order.totalCost
-
       }
       return acc
     }, 0)
@@ -54,6 +53,10 @@ class Bookings {
     return roomsRev + roomServiceRev
   }
 
+  findPercentRoomsBooked(date) {
+    let bookedRooms = this.data.bookings.filter( booking => booking.date === date)
+    return +((bookedRooms.length / this.data.rooms.length) * 100).toFixed(1)
+  }
 
 
 }

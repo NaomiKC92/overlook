@@ -7,9 +7,9 @@ import './css/base.scss';
 // import './images/turing-logo.png'
 
 
-// $('.login-screen').hide();
+$('.login-screen').hide();
 $('.customer-view').hide();
-$('.manager-view').hide();
+// $('.manager-view').hide();
 
 
 $('#manager-login-btn').click(directToChosenPage);

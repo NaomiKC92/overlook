@@ -40,4 +40,8 @@ describe.only('Bookings', () => {
     expect(bookings.findTotalRevenueForDate('2019/09/30')).to.equal(606.22)
   })
 
+  it.only('should return the percentage of rooms booked for the day', () => {
+    expect(bookings.findPercentRoomsBooked('2019/09/30')).to.equal(6.7)
+  })
+
 })
