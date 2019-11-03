@@ -42,6 +42,7 @@ class Bookings {
     return this.data.roomServiceOrders.reduce( (acc, order) => {
       if(order.date === date) {
         acc += order.totalCost
+
       }
       return acc
     }, 0)
