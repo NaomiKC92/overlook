@@ -1,11 +1,11 @@
 class HotelRepo {
-  constructor(data) {
-    this.bookings = data.bookings;
-    this.rooms = data.rooms;
-    this.customers = data.users
+  constructor(bookings, rooms, customers) {
+    this.bookings = bookings;
+    this.rooms = rooms;
+    this.customers = customers
   }
 
-  
+
 
 
 

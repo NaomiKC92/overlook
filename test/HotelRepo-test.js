@@ -9,7 +9,7 @@ describe.only('HotelRepo', () => {
   let hotelRepo;
 
   beforeEach(() => {
-    hotelRepo = new HotelRepo(testData)
+    hotelRepo = new HotelRepo(testData.bookings, testData.rooms, testData.users)
   });
 
   it('should be a function', () => {
@@ -20,7 +20,7 @@ describe.only('HotelRepo', () => {
     expect(hotelRepo.bookings).to.eql(testData.bookings);
   })
 
-  it('should have access to all booking data', () => {
+  it('should have access to all rooms data', () => {
     expect(hotelRepo.rooms).to.eql(testData.rooms);
   })
 
