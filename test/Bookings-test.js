@@ -20,8 +20,12 @@ describe.only('Bookings', () => {
     expect(bookings.data).to.eql(testData)
   });
 
+  it.only('should return the number of available rooms for a given date', () => {
+    expect(bookings.findNumberOfAvailableRooms('2019/09/30')).to.equal(28)
+  })
+
   it('should return the available rooms for a given date', () => {
-    expect(bookings.findRoomsAvailable('2019/09/30').length).to.equal(28)
+    expect(bookings.findAllRoomsAvailable('2019/09/30').length).to.equal(28)
   });
 
   it('should return the cost for a given room', () => {

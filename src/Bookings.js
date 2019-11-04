@@ -3,7 +3,12 @@ class Bookings {
     this.data = data;
   }
 
-  findRoomsAvailable(date) {
+  findNumberOfAvailableRooms(date) {
+    let openRooms = this.data.bookings.filter( booking => booking.date !== date);
+    return openRooms.length
+  }
+
+  findAllRoomsAvailable(date) {
     let openRooms = this.data.bookings.filter( booking => booking.date !== date);
     return openRooms.reduce((acc, openRoom) => {
       this.data.rooms.forEach(room => {

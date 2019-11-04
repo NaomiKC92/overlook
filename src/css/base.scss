@@ -3,8 +3,9 @@
 @import 'mixins';
 
 * {
-  font-family: 'Didact Gothic', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   color: $title-color;
+  font-weight: 400;
 }
 
 body {
@@ -81,13 +82,51 @@ input,
 .customer-view {
   background-color: $dark-blue-bg;
   opacity: 90%;
-  border: 3px solid $title-color;
+  border: 6px ridge $title-color;
   height: 100vh;
+  width: 95%;
+  margin-left: 25px; 
 }
 
 .manager-view {
   background-color: $dark-olive-color;
   opacity: 90%;
-  border: 3px solid $title-color;
+  border: 6px ridge $title-color;
   height: 100vh;
+  width: 95%;
+  margin-left: 25px; 
+}
+
+.daily-displays {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.display-todays-date {
+  font-family: 'Cinzel', serif;
+  font-size: 245%;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.days-report {
+  font-size: 180%;
+}
+
+.display-rooms-available,
+.display-percent-booked,
+.display-total-revenue {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  margin-top: -30px;
+}
+
+.num-stat {
+  font-size: 165%;
+  margin-left: 20px;
+  font-weight: 600;
 }
