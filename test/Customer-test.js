@@ -5,7 +5,7 @@ import testData from '../Data/testData';
 import Customer from '../src/Customer';
 
 
-describe.only('Customer', () => {
+describe('Customer', () => {
   let customer;
 
   beforeEach(() => {
