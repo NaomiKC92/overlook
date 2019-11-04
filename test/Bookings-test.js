@@ -5,7 +5,7 @@ import testData from '../Data/testData';
 import Bookings from '../src/Bookings';
 
 
-describe.only('Bookings', () => {
+describe('Bookings', () => {
   let bookings;
 
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe.only('Bookings', () => {
     expect(bookings.data).to.eql(testData)
   });
 
-  it.only('should return the number of available rooms for a given date', () => {
+  it('should return the number of available rooms for a given date', () => {
     expect(bookings.findNumberOfAvailableRooms('2019/09/30')).to.equal(28)
   })
 
@@ -44,7 +44,7 @@ describe.only('Bookings', () => {
     expect(bookings.findTotalRevenueForDate('2019/09/30')).to.equal(606.22)
   })
 
-  it.only('should return the percentage of rooms booked for the day', () => {
+  it('should return the percentage of rooms booked for the day', () => {
     expect(bookings.findPercentRoomsBooked('2019/09/30')).to.equal(6.7)
   })
 
