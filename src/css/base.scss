@@ -97,7 +97,8 @@ input,
   margin-left: 25px; 
 }
 
-.daily-displays {
+.daily-displays,
+.customer-history {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -110,15 +111,15 @@ input,
   font-weight: 400;
   text-align: center;
   margin-top: 15px;
+  font-style: italic;
 }
 
-.days-report {
+.days-report,
+.customer-report {
   font-size: 180%;
 }
 
-.display-rooms-available,
-.display-percent-booked,
-.display-total-revenue {
+.display-dash-info {
   display: flex;
   flex-direction: row;
   align-items: baseline;
@@ -129,4 +130,21 @@ input,
   font-size: 165%;
   margin-left: 20px;
   font-weight: 600;
+}
+
+.customer-reservations {
+  display: flex;
+  flex-direction: row;
+  margin-left: 20px;
+  font-size: 145%;
+}
+
+.res-list {
+  flex-wrap: wrap; 
+}
+
+.sep-dates {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
 }

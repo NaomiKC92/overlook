@@ -28,4 +28,12 @@ describe.only('HotelRepo', () => {
     expect(hotelRepo.customers).to.eql(testData.users);
   })
 
+  it('should return all room bookings for the given user id', () => {
+    expect(hotelRepo.findCustomerReservationHistory(8).length).to.equal(3)
+  })
+
+  it('should return the total amount a customer has spent on rooms', () => {
+    expect(hotelRepo.findTotalCustomerExpense(8)).to.equal(765.56)
+  })
+
 });

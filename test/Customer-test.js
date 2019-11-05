@@ -4,12 +4,11 @@ const expect = chai.expect;
 import testData from '../Data/testData';
 import Customer from '../src/Customer';
 
-
 describe('Customer', () => {
   let customer;
 
   beforeEach(() => {
-    customer = new Customer(testData.users[7].id, testData.users[7].name)
+    customer = new Customer(testData.users[7].id, testData.users[7].name, testData)
   });
 
   it('should be a function', () => {

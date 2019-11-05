@@ -6,11 +6,13 @@ import testData from '../Data/testData'
 
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/base.scss';
+import HotelRepo from './HotelRepo';
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 // import './images/turing-logo.png'
 
 let bookings = new Bookings(testData)
+let hotelRepo = new HotelRepo(testData.bookings, testData.rooms, testData.users)
 let date = getDate();
 let today = new Date();
 
@@ -21,7 +23,6 @@ const options = {
   month: 'long',
   day: 'numeric'
 };
-
 const formattedDate = dateObject.toLocaleString('en', options)
 
 
@@ -37,6 +38,10 @@ $('.display-todays-date').text(`${formattedDate}`)
 $('.rooms-available').text(`${bookings.findNumberOfAvailableRooms('2019/09/30')} rooms`);
 $('.occupancy-rate').text(`${bookings.findPercentRoomsBooked('2019/09/30')}  %`)
 $('.daily-revenue').text(`$ ${bookings.findTotalRevenueForDate('2019/09/30')}`)
+
+
+$('.customer-reservations').text(showReservationDates(8))
+$('.customer-total-expense').text('$ ' + hotelRepo.findTotalCustomerExpense(8))
 
 function directToChosenPage(event) {
   event.preventDefault();
@@ -75,40 +80,49 @@ function getDate() {
   return thisDay;
 }
 
-
-// const bookingsPromise = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings')
-// .then( response => response.json());
-
-// const usersPromise = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/users/users')
-//   .then( response => response.json());
-  
-// const roomsPromise = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/rooms/rooms')
-//   .then( response => response.json());
-
-
-//   Promise.all([bookingsPromise, usersPromise, roomsPromise])
-//   .then(dataSet => Promise.all(dataSet.map(dataSet => dataSet.json())))
-//   .then(allData => {
-//     let customers = allData.find(data => data.hasOwnProperty('users')).users;
-//     let roomInfo = allData.find(data => data.hasOwnProperty('rooms')).rooms;
-//     let bookingInfo = allData.find(data => data.hasOwnProperty('bookings')).bookings;
-//     let roomServices = allData.find(data => data.hasOwnProperty('roomServices')).roomServices;
-//     hotel = new Hotel(customers, roomInfo, bookingInfo, roomServices, date);
-//     orders = new Orders(date, roomServices);
-//     bookings = new Bookings(date, bookingInfo, roomInfo)
-//   })
-//   .then(() => onLoadHandler());
+function parseDate(date, divider) {
+  let year = +(date.split(divider)[0]);
+  let month = +(date.split(divider)[1]);
+  let day = +(date.split(divider)[2]);
+  if (day < 10 && month < 10) {
+    return +(`${year}0${month}0${day}`);
+  } else if (day < 10 && month >= 10){
+    return +(`${year}${month}0${day}`);
+  } else if (day >= 10 && month < 10){
+    return +(`${year}0${month}${day}`);
+  } else {
+    return +(`${year}${month}${day}`);
+  }
+}
 
 
-// function fetchData(dataType) {
-//   const baseUrl = 'https://fe-apps.herokuapp.com/api/v1/overlook/1904/';
-//   const promise = fetch(baseUrl + `${dataType}`)
-//     .then( response => response.json())
-//   return promise
-// }
+function stringifyDate(date) {
+  let splitDate = date.toString().split('');
+  let year = `${splitDate[0]}${splitDate[1]}${splitDate[2]}${splitDate[3]}`;
+  let month = `${splitDate[4]}${splitDate[5]}`;
+  let day = `${splitDate[6]}${splitDate[7]}`;
+  return `${year}/${month}/${day}`
+}
 
-// fetchData('users/users')
-//   .then(user => {
-//     // console.log(user.users[0])
-//   })
-//   .catch(error => console.log('ERROR'))
+function sortDates(dates) {
+  let parsedDates = [];
+  dates.forEach(date => {
+    parsedDates.push(parseDate(date, '/'));
+  })
+  return parsedDates.sort((a, b) => b - a).map(date => stringifyDate(date))
+}
+
+function showReservationDates(id) {
+  let bookings = hotelRepo.findCustomerReservationHistory(id);
+  let datesBooked = bookings.map( booking => booking.date)
+  return sortDates(datesBooked).join(' | ')
+}
+
+
+
+
+
+
+
+
+
