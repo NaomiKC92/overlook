@@ -3,9 +3,10 @@
 @import 'mixins';
 
 * {
-  font-family: 'Didact Gothic', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  color: $title-color;
+  font-weight: 400;
 }
-
 
 body {
   background: url('../images/hogwarts-light.jpg');
@@ -18,6 +19,7 @@ h1 {
   font-weight: 400;
   font-size: 250%;
   color: $title-color;
+  padding: 10px;
 }
 
 button:hover {
@@ -37,14 +39,15 @@ button:hover {
   flex-direction: row;
   font-size: 130%;
   height: 20%;
-  justify-content: space-around;
-  width: 40%;
+  justify-content: space-between;
+  width: 42%;
   margin-left: 60px;
 }
 
 .login-block {
   display: flex;
   flex-direction: column;
+  width: 185px;
 }
 
 .login-label {
@@ -52,7 +55,6 @@ button:hover {
 }
 
 input {
-  border: 2px solid $dark-olive-color;
   color: $dark-olive-color;
   border-radius: 3px;
   border: 3px solid $dark-blue-bg;
@@ -67,8 +69,8 @@ input {
   border: 3px solid $dark-blue-bg;
   border-radius: 3px;
   color: $title-color;
-  height: 40px;
-  width: 185px;
+  height: 45px;
+  width: 100%;
   font-size: 87%;
 }
 
@@ -78,13 +80,71 @@ input,
 }
 
 .customer-view {
-  background-color: aquamarine;
-  height: 1000px;
-  width: 1000px;
+  background-color: $dark-blue-bg;
+  opacity: 90%;
+  border: 6px ridge $title-color;
+  height: 100vh;
+  width: 95%;
+  margin-left: 25px; 
 }
 
 .manager-view {
-  background-color: #000;
-  height: 1000px;
-  width: 1000px;
+  background-color: $dark-olive-color;
+  opacity: 90%;
+  border: 6px ridge $title-color;
+  height: 100vh;
+  width: 95%;
+  margin-left: 25px; 
+}
+
+.daily-displays,
+.customer-history {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.display-todays-date {
+  font-family: 'Cinzel', serif;
+  font-size: 245%;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 15px;
+  font-style: italic;
+}
+
+.days-report,
+.customer-report {
+  font-size: 180%;
+}
+
+.display-dash-info {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  margin-top: -30px;
+}
+
+.num-stat {
+  font-size: 165%;
+  margin-left: 20px;
+  font-weight: 600;
+}
+
+.customer-reservations {
+  display: flex;
+  flex-direction: row;
+  margin-left: 20px;
+  font-size: 145%;
+}
+
+.res-list {
+  flex-wrap: wrap; 
+}
+
+.sep-dates {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
 }
