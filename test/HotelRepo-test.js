@@ -5,7 +5,7 @@ import testData from '../Data/testData';
 import HotelRepo from '../src/HotelRepo';
 
 
-describe.only('HotelRepo', () => {
+describe('HotelRepo', () => {
   let hotelRepo;
 
   beforeEach(() => {

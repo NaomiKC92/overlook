@@ -1,17 +1,19 @@
 class Bookings {
-  constructor(data) {
-    this.data = data;
+  constructor(bookings, rooms, roomServices) {
+    this.bookings = bookings;
+    this.rooms = rooms;
+    this.roomServices = roomServices
   }
 
   findNumberOfAvailableRooms(date) {
-    let openRooms = this.data.bookings.filter( booking => booking.date !== date);
+    let openRooms = this.bookings.filter( booking => booking.date !== date);
     return openRooms.length
   }
 
   findAllRoomsAvailable(date) {
-    let openRooms = this.data.bookings.filter( booking => booking.date !== date);
+    let openRooms = this.bookings.filter( booking => booking.date !== date);
     return openRooms.reduce((acc, openRoom) => {
-      this.data.rooms.forEach(room => {
+      this.rooms.forEach(room => {
         if(openRoom.roomNumber === room.number) {
           acc.push(room)
         }
@@ -21,19 +23,19 @@ class Bookings {
   }
 
   findCostPerRoom(roomNum) {
-    let chosenRoom = this.data.rooms.find( room => room. number === roomNum);
+    let chosenRoom = this.rooms.find( room => room. number === roomNum);
     return chosenRoom.costPerNight
   }
 
   findTodaysRoomsRevenue(date) {
     let roomNums = []
-    this.data.bookings.filter( booking => {
+    this.bookings.filter( booking => {
       if(booking.date === date) {
         roomNums.push(booking.roomNumber)
       }
     });
     let revenueFromRooms = roomNums.reduce( (acc, room) => {
-      this.data.rooms.map( booked => {
+      this.rooms.map( booked => {
         if(booked.number === room) {
           acc += booked.costPerNight
         }
@@ -44,7 +46,7 @@ class Bookings {
   }
 
   findRoomServiceRevenue(date) {
-    return this.data.roomServiceOrders.reduce( (acc, order) => {
+    return this.roomServices.reduce( (acc, order) => {
       if(order.date === date) {
         acc += order.totalCost
       }
@@ -59,8 +61,8 @@ class Bookings {
   }
 
   findPercentRoomsBooked(date) {
-    let bookedRooms = this.data.bookings.filter( booking => booking.date === date)
-    return +((bookedRooms.length / this.data.rooms.length) * 100).toFixed(1)
+    let bookedRooms = this.bookings.filter( booking => booking.date === date)
+    return +((bookedRooms.length / this.rooms.length) * 100).toFixed(1)
   }
 
 

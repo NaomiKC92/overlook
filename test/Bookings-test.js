@@ -5,19 +5,15 @@ import testData from '../Data/testData';
 import Bookings from '../src/Bookings';
 
 
-describe('Bookings', () => {
+describe.only('Bookings', () => {
   let bookings;
 
   beforeEach(() => {
-    bookings = new Bookings(testData)
+    bookings = new Bookings(testData.bookings, testData.rooms, testData.roomServiceOrders)
   });
 
   it('should be a function', () => {
     expect(Bookings).to.be.a('function');
-  });
-
-  it('should have access to all test data', () => {
-    expect(bookings.data).to.eql(testData)
   });
 
   it('should return the number of available rooms for a given date', () => {

@@ -11,10 +11,37 @@ import HotelRepo from './HotelRepo';
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 // import './images/turing-logo.png'
 
-let bookings = new Bookings(testData)
-let hotelRepo = new HotelRepo(testData.bookings, testData.rooms, testData.users)
+const bookingsPromise = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings')
+.then( response => response.json());
+
+const customerPromise = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/users/users')
+  .then( response => response.json());
+  
+const roomsPromise = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/rooms/rooms')
+  .then( response => response.json());
+
+
+let roomsData;
+let bookingsData;
+let customerData;
+let hotelRepo;
+let bookings;
+
+Promise.all([roomsPromise, bookingsPromise, customerPromise])
+.then(data => {
+  roomsData = data[0].rooms;
+  console.log(roomsData)
+  bookingsData = data[1].bookings;
+  console.log(bookingsData)
+  customerData = data[2].users;
+  console.log(customerData)
+
+
+bookings = new Bookings(bookingsData, roomsData, customerData)
+hotelRepo = new HotelRepo(bookingsData, roomsData, customerData)
 let date = getDate();
 let today = new Date();
+
 
 const dateObject = new Date(today);
 const options = {
@@ -28,7 +55,7 @@ const formattedDate = dateObject.toLocaleString('en', options)
 
 $('.login-screen').hide();
 $('.customer-view').hide();
-// $('.manager-view').hide();
+$('.manager-view').hide();
 
 
 $('#manager-login-btn').click(directToChosenPage);
@@ -122,7 +149,8 @@ function showReservationDates(id) {
 
 
 
-
+});
+// END OF FETCH
 
 
 
