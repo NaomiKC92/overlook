@@ -1,7 +1,6 @@
 import $ from 'jquery';
 
 import Bookings from './Bookings'
-import testData from '../Data/testData'
 
 
 // An example of how you tell webpack to use a CSS (SCSS) file
@@ -32,9 +31,9 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
   roomsData = data[0].rooms;
   console.log(roomsData)
   bookingsData = data[1].bookings;
-  console.log(bookingsData)
+  // console.log(bookingsData)
   customerData = data[2].users;
-  console.log(customerData)
+  // console.log(customerData)
 
 
 bookings = new Bookings(bookingsData, roomsData, customerData)
