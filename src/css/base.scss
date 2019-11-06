@@ -33,7 +33,7 @@ button:hover {
   color: $title-color;
 }
 
-.login-form {
+.login-container {
   align-items: center;
   display: flex;
   flex-direction: row;
@@ -83,7 +83,7 @@ input,
   background-color: $dark-blue-bg;
   opacity: 90%;
   border: 6px ridge $title-color;
-  height: 100vh;
+  // height: 100vh;
   width: 95%;
   margin-left: 25px; 
 }
@@ -103,6 +103,13 @@ input,
   flex-direction: column;
   text-align: center;
   align-items: center;
+  padding: 20px;
+}
+
+.section-separator {
+  border: 2px solid $title-color;
+  width: 90%;
+  margin: auto auto 40px auto;
 }
 
 .display-todays-date {
@@ -137,6 +144,7 @@ input,
   flex-direction: row;
   margin-left: 20px;
   font-size: 145%;
+  flex-wrap: wrap;
 }
 
 .res-list {
@@ -147,4 +155,59 @@ input,
   display: flex;
   flex-direction: row;
   align-items: baseline;
+}
+
+.booking-header {
+  font-family: 'Cinzel', serif;
+  text-align: center;
+  font-size: 200%;
+}
+
+.booking-block {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+
+.input-container {
+  display: flex;
+}
+
+.filter-btn,
+.find-room-btn {
+  height: 40px;
+  background-color: $dark-blue-bg;
+  font-size: 100%;
+  border-radius: 3px;
+}
+
+.start-date-input {
+  height: 35px;
+  border-radius: 4px;
+}
+
+#display-filtered,
+#display-rooms {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.individual-room {
+  width: 200px;
+  overflow-wrap: normal;
+  border: 2px solid $title-color;
+  margin: 4px;
+  padding: 4px;
+}
+
+.individual-room:hover {
+  cursor: pointer;
+  box-shadow: 8px 8px 4px gray;
+}
+
+.book-room-section {
+  text-align: center;
 }
