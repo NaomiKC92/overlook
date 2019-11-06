@@ -40,8 +40,8 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
     };
     const formattedDate = dateObject.toLocaleString('en', options)
 
-    $('.login-screen').hide();
-    // $('.customer-view').hide();
+    // $('.login-screen').hide();
+    $('.customer-view').hide();
     $('.manager-view').hide();
 
     $('#manager-login-btn').click(directToChosenPage);
@@ -144,7 +144,6 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       return sortDates(datesBooked).join(' | ')
     }
 
-
     function showBookingError() {
       if(bookings.findNumberOfAvailableRooms() < 1) {
       $('.error-box').attr('hidden',false)
@@ -192,14 +191,12 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
 
 
     $('.filter-btn').click(() => {
-      
       let inputDate = $('.start-date-input').val()
       let numDate = parseDate(inputDate, '-');
       let date = stringifyDate(numDate);
       let filteredRooms = bookings.filterByRoomType(date, $('.filter-input').val());
       filteredRooms.forEach(room => {
         roomNumber = room.number
-        // console.log(roomNumber)
         $('#display-filtered').append(
         `<div class='individual-room' id='${room.number}' type='submit'>
         <h4>Room Number : ${room.number} 
@@ -220,9 +217,7 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       let dateInput = $('.start-date-input').val()
       let numDate = parseDate(dateInput, '-');
       let bookedDate = stringifyDate(numDate);
-      console.log(bookedDate)
       let postData = bookings.createBooking(50, bookedDate, roomNumber);
-      console.log(postData)
       fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
         method: 'POST',
         headers: {

@@ -21,7 +21,6 @@ describe('Bookings', () => {
   })
 
   it('should return the available rooms for a given date', () => {
-    // console.log('available : ', bookings.findAllRoomsAvailable('2019/09/30'))
     expect(bookings.findAllRoomsAvailable('2019/09/30').length).to.equal(25)
   });
 
@@ -45,7 +44,7 @@ describe('Bookings', () => {
     expect(bookings.findPercentRoomsBooked('2019/09/30')).to.equal(6.7)
   })
 
-  it.only('should return rooms by type searched for', () => {
+  it('should return rooms by type searched for', () => {
     expect(bookings.filterByRoomType('2019/09/30', 'suite').length).to.equal(5)
   })
 

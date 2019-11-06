@@ -55,12 +55,12 @@ button:hover {
 }
 
 input {
-  color: $dark-olive-color;
   border-radius: 3px;
   border: 3px solid $dark-blue-bg;
-  padding: 5px;
-  height: 30px;
+  color: $dark-olive-color;
   font-size: 87%;
+  height: 30px;
+  padding: 5px;
 }
 
 .login-btns {

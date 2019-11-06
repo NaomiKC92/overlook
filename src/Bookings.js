@@ -70,7 +70,6 @@ class Bookings {
     return availableRooms.filter( room => room.roomType === type)
   }
 
-
   createBooking(id, date, room) {
     return {
       userID: id,

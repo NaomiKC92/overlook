@@ -12,12 +12,12 @@
   <section class='login-screen'>
     <div class='login-container'>
       <div class='login-block'>
-        <label class='login-label'>E-mail</label>
+        <label class='login-label' for='email-input'>E-mail</label>
         <input type='email' placeholder='Enter email' id='email-input'>
         <button class='login-btns' id='manager-login-btn'>Manager Login</button>
       </div>
       <div class='login-block'>
-        <label class='login-label'>Password</label>
+        <label class='login-label' for='password-input'>Password</label>
         <input type='password' placeholder='Enter password' id='password-input'>
         <button class='login-btns' id='customer-login-btn'>Customer Login</button>
       </div>
@@ -26,7 +26,6 @@
   <section class='manager-view'>
     <h2 class='display-todays-date'></h2>
     <section class='daily-displays'>
-      <!-- <h2>Today's Statistics</h2> -->
       <div class='display-dash-info'>
         <h3 class='days-report'>Rooms Available : </h3>
         <p class='rooms-available num-stat'></p>
@@ -40,6 +39,7 @@
         <p class='daily-revenue num-stat'></p>
       </div>
     </section>
+    <div class='section-separator'></div>
   </section>
   <section class='customer-view'>
     <h2 class='display-todays-date'></h2>
