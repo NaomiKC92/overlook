@@ -14,7 +14,7 @@ class Bookings {
     let openRooms = this.bookings.filter( booking => booking.date !== date);
     return openRooms.reduce((acc, openRoom) => {
       this.rooms.forEach(room => {
-        if(openRoom.roomNumber === room.number) {
+        if(openRoom.roomNumber === room.number && !acc.includes(room)) {
           acc.push(room)
         }
       })
@@ -65,6 +65,19 @@ class Bookings {
     return +((bookedRooms.length / this.rooms.length) * 100).toFixed(1)
   }
 
+  filterByRoomType(date, type) {
+    let availableRooms = this.findAllRoomsAvailable(date);
+    return availableRooms.filter( room => room.roomType === type)
+  }
+
+
+  createBooking(id, date, room) {
+    return {
+      userID: id,
+      date: date,
+      roomNumber: room
+    }
+  }
 
 }
 
