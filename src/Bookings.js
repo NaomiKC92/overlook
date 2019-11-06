@@ -76,6 +76,7 @@ class Bookings {
       userID: id,
       date: date,
       roomNumber: room
+
     }
   }
 

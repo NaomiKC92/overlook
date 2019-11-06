@@ -3,8 +3,6 @@ import './css/base.scss';
 import Bookings from './Bookings'
 import HotelRepo from './HotelRepo';
 
-// import './images/turing-logo.png'
-
 const bookingsPromise = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings')
   .then(response => response.json());
 const customerPromise = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/users/users')
@@ -12,13 +10,13 @@ const customerPromise = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/190
 const roomsPromise = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/rooms/rooms')
   .then(response => response.json());
 
-
 let roomsData;
 let bookingsData;
 let customerData;
 let hotelRepo;
 let bookings;
 let customerId;
+let roomNumber;
 
 Promise.all([roomsPromise, bookingsPromise, customerPromise])
   .then(data => {
@@ -42,8 +40,8 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
     };
     const formattedDate = dateObject.toLocaleString('en', options)
 
-    // $('.login-screen').hide();
-    $('.customer-view').hide();
+    $('.login-screen').hide();
+    // $('.customer-view').hide();
     $('.manager-view').hide();
 
     $('#manager-login-btn').click(directToChosenPage);
@@ -115,7 +113,6 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       }
     }
 
-
     function stringifyDate(date) {
       let splitDate = date.toString().split('');
       let year = `${splitDate[0]}${splitDate[1]}${splitDate[2]}${splitDate[3]}`;
@@ -147,16 +144,29 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       return sortDates(datesBooked).join(' | ')
     }
 
+
+    function showBookingError() {
+      if(bookings.findNumberOfAvailableRooms() < 1) {
+      $('.error-box').attr('hidden',false)
+      }
+      if(bookings.filterByRoomType(date, type).length < 1) {
+        $('.error-box').attr('hidden',false)
+      }
+    }
+
     function displayAvailableRooms(date) {
       let available = bookings.findAllRoomsAvailable(date)
       available.forEach(room => {
+        roomNumber = room.number
+        // console.log(roomNumber)
         $('#display-rooms').append(
-          `<b id='${room.number}'></b>
-      <div class='individual-room'>
+      `<div class='individual-room' id='${room.number}'>
+      <h4>Room Number</b> : ${room.number}</h4>
       <h4>Room Type</b> : ${room.roomType}</h4>
       <h4>Number Of Beds</b> : ${room.numBeds}</h4>
       <h4>Bed Size</b> : ${room.bedSize}</h4>
       <h4>Price</b> : $ ${room.costPerNight}<h4/>
+      <button class='book-this-room'>BOOK</button>
       </div>
       <br/>`
         )
@@ -182,18 +192,22 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
 
 
     $('.filter-btn').click(() => {
+      
       let inputDate = $('.start-date-input').val()
       let numDate = parseDate(inputDate, '-');
       let date = stringifyDate(numDate);
       let filteredRooms = bookings.filterByRoomType(date, $('.filter-input').val());
       filteredRooms.forEach(room => {
+        roomNumber = room.number
+        // console.log(roomNumber)
         $('#display-filtered').append(
-          `<b id='${room.number}'></b>
-        <div class='individual-room' type='submit'>
+        `<div class='individual-room' id='${room.number}' type='submit'>
+        <h4>Room Number : ${room.number} 
         <h4>Room Type</b> : ${room.roomType}</h4>
         <h4>Number Of Beds</b> : ${room.numBeds}</h4>
         <h4>Bed Size</b> : ${room.bedSize}</h4>
         <h4>Price</b> : $ ${room.costPerNight}<h4/>
+        <button class='book-this-room'>BOOK</button>
         </div>
         <br/>`
         )
@@ -206,9 +220,9 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       let dateInput = $('.start-date-input').val()
       let numDate = parseDate(dateInput, '-');
       let bookedDate = stringifyDate(numDate);
-      let roomNumber = +($('.clicked').html().split('x')[1]);
-      let postData = bookingsRepository.makeBooking(customerId, bookedDate, roomNumber);
-      console.log($('.clicked').html())
+      console.log(bookedDate)
+      let postData = bookings.createBooking(50, bookedDate, roomNumber);
+      console.log(postData)
       fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
         method: 'POST',
         headers: {
@@ -222,13 +236,16 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
         });
     }
 
-    $('.individual-room').click(postBooking)
+    function handlePost(e) {
+      if (e.target.className && e.target.className === 'book-this-room') {
+        postBooking()
+      }
+    }
+
+    $('.book-room-section').click(handlePost)
 
 
-
-    //////
   });
-////// END OF FETCH
 
 
 
