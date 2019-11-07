@@ -2,6 +2,7 @@ import $ from 'jquery';
 import './css/base.scss';
 import Bookings from './Bookings'
 import HotelRepo from './HotelRepo';
+import Customer from './Customer'
 
 const bookingsPromise = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings')
   .then(response => response.json());
@@ -17,6 +18,7 @@ let hotelRepo;
 let bookings;
 let customerId;
 let roomNumber;
+let customer;
 
 Promise.all([roomsPromise, bookingsPromise, customerPromise])
   .then(data => {
@@ -40,27 +42,37 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
     };
     const formattedDate = dateObject.toLocaleString('en', options)
 
-    // $('.login-screen').hide();
+    $('.login-screen').hide();
     $('.customer-view').hide();
-    $('.manager-view').hide();
+    // $('.manager-view').hide();
 
+    console.log(date)
     $('#manager-login-btn').click(directToChosenPage);
     $('#customer-login-btn').click(directToChosenPage);
 
     $('.display-todays-date').text(`${formattedDate}`)
-    $('.rooms-available').text(`${bookings.findNumberOfAvailableRooms('2019/09/30')} rooms`);
-    $('.occupancy-rate').text(`${bookings.findPercentRoomsBooked('2019/09/30')}  %`)
-    $('.daily-revenue').text(`$ ${bookings.findTotalRevenueForDate('2019/09/30')}`)
+    $('.rooms-available').text(`${bookings.findNumberOfAvailableRooms(date)} rooms`);
+    $('.occupancy-rate').text(`${bookings.findPercentRoomsBooked(date)}  %`)
+    $('.daily-revenue').text(`$ ${bookings.findTodaysRoomsRevenue(date)}`)
+    
+    function findName(id) {
+      let customer = customerData.find(customer => customer.id === id)
+      return customer.name
+    }
 
     function captureCustomerId() {
       if ($('#email-input').val().includes('customer')) {
-        customerId = ($('#email-input').val().slice(8, 10) * 1)
+        customerId = ($('#email-input').val().slice(8, 10) * 1);
+        localStorage.setItem("customerId", customerId);
+        let name = findName(customerId);
+        customer = new Customer(customerId, name)
       };
       return customerId
     }
-
+  
     function directToChosenPage(event) {
       captureCustomerId();
+      customerId = JSON.parse(localStorage.getItem("customerId"))
       let email = $('#email-input').val();
       let password = $('#password-input').val()
       if (event.target.id === 'manager-login-btn') {
@@ -157,7 +169,6 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       let available = bookings.findAllRoomsAvailable(date)
       available.forEach(room => {
         roomNumber = room.number
-        // console.log(roomNumber)
         $('#display-rooms').append(
       `<div class='individual-room' id='${room.number}'>
       <h4>Room Number</b> : ${room.number}</h4>
@@ -213,11 +224,14 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
     })
 
 
-    function postBooking() {
+    function postBooking(e) {
       let dateInput = $('.start-date-input').val()
       let numDate = parseDate(dateInput, '-');
       let bookedDate = stringifyDate(numDate);
-      let postData = bookings.createBooking(50, bookedDate, roomNumber);
+      let customerId = JSON.parse(localStorage.getItem("customerId"))
+      let postData = bookings.createBooking(customerId, bookedDate, roomNumber);
+      console.log(hotelRepo.findCustomerReservationHistory(customerId).length)
+      if (e.target.className && e.target.className === 'book-this-room') {
       fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
         method: 'POST',
         headers: {
@@ -226,18 +240,13 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
         body: JSON.stringify(postData)
       })
         .then(() => console.log('room booked'))
+        .then( () => hotelRepo.findCustomerReservationHistory(customerId).push(postData))
         .catch(error => {
           console.log(error);
         });
-    }
-
-    function handlePost(e) {
-      if (e.target.className && e.target.className === 'book-this-room') {
-        postBooking()
       }
     }
-
-    $('.book-room-section').click(handlePost)
+    $('.book-room-section').click(postBooking)
 
 
   });

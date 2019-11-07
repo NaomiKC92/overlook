@@ -2,7 +2,7 @@ class Bookings {
   constructor(bookings, rooms, roomServices) {
     this.bookings = bookings;
     this.rooms = rooms;
-    this.roomServices = roomServices
+    this.roomServices = roomServices;
   }
 
   findNumberOfAvailableRooms(date) {
@@ -42,26 +42,12 @@ class Bookings {
       })
       return acc
     }, 0)
-      return revenueFromRooms
-  }
-
-  findRoomServiceRevenue(date) {
-    return this.roomServices.reduce( (acc, order) => {
-      if(order.date === date) {
-        acc += order.totalCost
-      }
-      return acc
-    }, 0)
-  }
-
-  findTotalRevenueForDate(date) {
-    let roomsRev = this.findTodaysRoomsRevenue(date);
-    let roomServiceRev = this.findRoomServiceRevenue(date);
-    return roomsRev + roomServiceRev
+      return revenueFromRooms.toFixed(2)
   }
 
   findPercentRoomsBooked(date) {
     let bookedRooms = this.bookings.filter( booking => booking.date === date)
+    console.log(bookedRooms)
     return +((bookedRooms.length / this.rooms.length) * 100).toFixed(1)
   }
 
