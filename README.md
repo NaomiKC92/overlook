@@ -3,7 +3,7 @@
 ## Author: Naomi Campos
 
 ### Overview
-Overlook is a hotel reservaiton app that allows the user, either a manager or customer, to view available rooms, view a customer's total reservation history and add new bookings.
+Overlook is a hotel reservation app that allows the user, either a manager or customer, to view available rooms, view a customer's total reservation history and add and delete bookings.
 
 ### Technologies Used
 - Fetch APIs
