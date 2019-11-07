@@ -1,3 +1,5 @@
+import HotelRepo from "./HotelRepo";
+
 class Bookings {
   constructor(bookings, rooms) {
     this.bookings = bookings;
@@ -56,11 +58,14 @@ class Bookings {
 
   createBooking(id, date, room) {
     return {
+      id: Date.now(),
       userID: id,
       date: date,
       roomNumber: room
     }
   }
+
+
 
 }
 

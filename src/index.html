@@ -47,12 +47,14 @@
 
     <section class='manager-activity'>
       <div class='mgr-find-user'>
-        <h4>Find Customer Reservations</h4>
+        <h3 class='delete-header'>Find Customer Reservations</h3>
         <input type='number' class='mgr-id-input' placeholder='Enter Customer Id'>
         <button class='mgr-find-res-btn'>Find Reservations</button>
         <div class=customer-res-display>
           <p class='mgr-reservations-list'></p>
         </div>
+      </div>
+      <div class='manager-delete'>
       </div>
     </section>
 
@@ -77,6 +79,13 @@
     <section class='book-room-section'>
       <h3 class='booking-header'>Book a Room</h3>
       <div class='input-container'>
+        <div class='filter-room-type'>
+          <input type='text' class='filter-input' placeholder='Filter By Room Type'>
+          <button class='filter-btn'>Filter</button>
+        </div>
+        <div class='display-filtered-rooms'>
+          <p id='display-filtered'></p>
+        </div>
         <div class='start-date-container booking-block'>
           <input type='date' class='start-date-input'>
           <button class='find-room-btn'>Find Available Rooms</button>
@@ -84,17 +93,14 @@
         <div class='display-available-rooms'>
           <p id='display-rooms'></p>
         </div>
-        <div class='filter-room-type booking-block'>
-          <input type='text' class='filter-input' placeholder='Filter By Room Type'>
-          <button class='filter-btn'>Filter</button>
-        </div>
-        <div class='display-filtered-rooms'>
-          <p id='display-filtered'></p>
-        </div>
+
       </div>
-      <div class='error-box' hidden='true'><p>We do apologize, there are no rooms available for that date / room type. Please choose another</p></div>
+      <div class='error-box' hidden='true'>
+        <p>We do apologize, there are no rooms available for that date / room type. Please choose another</p>
+      </div>
       </div>
     </section>
   </section>
 </body>
+
 </html>

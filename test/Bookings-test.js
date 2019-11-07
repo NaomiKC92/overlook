@@ -3,13 +3,14 @@ const expect = chai.expect;
 
 import testData from '../Data/testData';
 import Bookings from '../src/Bookings';
+import HotelRepo from '../src/HotelRepo';
 
 
 describe('Bookings', () => {
   let bookings;
 
   beforeEach(() => {
-    bookings = new Bookings(testData.bookings, testData.rooms, testData.roomServiceOrders)
+    bookings = new Bookings(testData.bookings, testData.rooms)
   });
 
   it('should be a function', () => {
@@ -47,5 +48,6 @@ describe('Bookings', () => {
       roomNumber: 23
     })
   })
+
 
 })
