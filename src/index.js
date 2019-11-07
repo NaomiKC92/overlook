@@ -50,14 +50,14 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
     // $('.manager-view').hide();
     $('.filter-room-type').hide();
 
-    $('#manager-login-btn').click(directToChosenPage);
-    $('#customer-login-btn').click(directToChosenPage);
-
-    $('.display-todays-date').text(`${formattedDate}`)
     $('.rooms-available').text(`${bookings.findNumberOfAvailableRooms(date)} rooms`);
+    $('.display-todays-date').text(`${formattedDate}`)
     $('.occupancy-rate').text(`${bookings.findPercentRoomsBooked(date)}  %`);
     $('.daily-revenue').text(`$ ${bookings.findTodaysRoomsRevenue(date)}`);
+    $('#manager-login-btn').click(directToChosenPage);
+    $('#customer-login-btn').click(directToChosenPage);
     $('.book-room-section').click(postBooking);
+    $('.mgr-find-res-btn').click(findCustomerReservations)
 
     function findName(id) {
       let customer = customerData.find(customer => customer.id === id)
@@ -101,15 +101,12 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       let dd = today.getDate();
       let mm = today.getMonth() + 1;
       let yyyy = today.getFullYear();
-
       if (dd < 10) {
         dd = '0' + dd
       }
-
       if (mm < 10) {
         mm = '0' + mm
       }
-
       let thisDay = yyyy + '/' + mm + '/' + dd;
       return thisDay;
     }
@@ -253,15 +250,11 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       }
     }
 
-
     $('.manager-activity').click(e => {
-      // let dateInput = $('.start-date-input').val()
-      // let numDate = parseDate(dateInput, '-');
-      // let bookedDate = stringifyDate(numDate);
-      console.log(e.target.parentNode)
       if (e.target.className && e.target.className === 'delete-btn') {
-        const bookingObject = {}
-        bookingObject.id = parseInt(event.target.id);
+        let bookingObject = {}
+        console.log(e.target.parentNode)
+        bookingObject.id = +(parseInt(e.target.id));
         manager.deleteBooking(bookingObject);
         e.target.parentNode.remove()
       }
@@ -272,10 +265,10 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       $('.mgr-id-input').val('')
       findReservationsToDelete(idValue).forEach(reservation => {
         $('.mgr-reservations-list').append(
-          `<div class='mgr-customer-reservations' id='${reservation.id}'>
+          `<div class='mgr-customer-reservations'>
         <h4>Room Number : ${reservation.roomNumber} 
         <h4>Date</b> : ${reservation.date}</h4>
-        <button class='delete-btn'>Cancel</button>
+        <button class='delete-btn' id='${reservation.id}'>Cancel</button>
         </div>
         <br/>`)
       })
