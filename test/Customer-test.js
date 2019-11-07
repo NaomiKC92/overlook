@@ -8,7 +8,7 @@ describe('Customer', () => {
   let customer;
 
   beforeEach(() => {
-    customer = new Customer(testData.users[7].id, testData.users[7].name, testData)
+    customer = new Customer(testData.users[7].id, testData.users[7].name, testData.users)
   });
 
   it('should be a function', () => {
@@ -21,6 +21,14 @@ describe('Customer', () => {
 
   it('should have access to the customer\'s name', () => {
     expect(customer.name).to.equal('Era Hand')
+  })
+
+  it('should return the user\'s name with a matching Id', () => {
+    expect(customer.findName(8)).to.equal('Era Hand')
+  })
+
+  it('should only return the user\'s first name', () => {
+    expect(customer.returnFirstNameOnly(8)).to.equal('Era')
   })
 
 })

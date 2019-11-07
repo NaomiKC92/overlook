@@ -1,36 +1,35 @@
-/* This is an example of using Sass, otherwise plain CSS works too*/
 @import 'variables';
 @import 'mixins';
 
 * {
-  font-family: 'Montserrat', sans-serif;
   color: $title-color;
+  font-family: $body-font;
   font-weight: 400;
 }
 
 body {
-  background: url('../images/hogwarts-light.jpg');
-  background-size: cover;
   background-attachment: fixed;
+  background-size: cover;
+  background: url('../images/hogwarts-light.jpg');
 }
 
 h1 {
-  font-family: 'Cinzel', serif;
-  font-weight: 400;
-  font-size: 250%;
   color: $title-color;
+  font-family: $header-font;
+  font-size: 250%;
+  font-weight: 400;
   padding: 10px;
 }
 
 button:hover {
-  cursor: pointer;
   background-color: transparent;
+  cursor: pointer;
 }
 
 .login-screen {
+  color: $title-color;
   height: 1000px;
   width: 1000px;
-  color: $title-color;
 }
 
 .login-container {
@@ -40,8 +39,8 @@ button:hover {
   font-size: 130%;
   height: 20%;
   justify-content: space-between;
-  width: 42%;
   margin-left: 60px;
+  width: 42%;
 }
 
 .login-block {
@@ -55,23 +54,23 @@ button:hover {
 }
 
 input {
-  color: $dark-olive-color;
   border-radius: 3px;
   border: 3px solid $dark-blue-bg;
-  padding: 5px;
-  height: 30px;
+  color: $dark-olive-color;
   font-size: 87%;
+  height: 30px;
+  padding: 5px;
 }
 
 .login-btns {
-  margin-top: 30px;
   background-color: $dark-olive-color;
-  border: 3px solid $dark-blue-bg;
   border-radius: 3px;
+  border: 3px solid $dark-blue-bg;
   color: $title-color;
-  height: 45px;
-  width: 100%;
   font-size: 87%;
+  height: 45px;
+  margin-top: 30px;
+  width: 100%;
 }
 
 input,
@@ -81,44 +80,42 @@ input,
 
 .customer-view {
   background-color: $dark-blue-bg;
-  opacity: 90%;
   border: 6px ridge $title-color;
-  // height: 100vh;
-  width: 95%;
   margin-left: 25px; 
+  opacity: 90%;
+  width: 95%;
 }
 
 .manager-view {
   background-color: $dark-olive-color;
-  opacity: 90%;
   border: 6px ridge $title-color;
-  height: 100vh;
-  width: 95%;
   margin-left: 25px; 
+  opacity: 90%;
+  width: 95%;
 }
 
 .daily-displays,
 .customer-history {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  text-align: center;
-  align-items: center;
   padding: 20px;
+  text-align: center;
 }
 
 .section-separator {
   border: 2px solid $title-color;
-  width: 90%;
   margin: auto auto 40px auto;
+  width: 90%;
 }
 
 .display-todays-date {
-  font-family: 'Cinzel', serif;
+  font-family: $header-font;
   font-size: 245%;
-  font-weight: 400;
-  text-align: center;
-  margin-top: 15px;
   font-style: italic;
+  font-weight: 400;
+  margin-top: 15px;
+  text-align: center;
 }
 
 .days-report,
@@ -127,24 +124,24 @@ input,
 }
 
 .display-dash-info {
+  align-items: baseline;
   display: flex;
   flex-direction: row;
-  align-items: baseline;
   margin-top: -30px;
 }
 
 .num-stat {
   font-size: 165%;
-  margin-left: 20px;
   font-weight: 600;
+  margin-left: 20px;
 }
 
 .customer-reservations {
   display: flex;
-  flex-direction: row;
-  margin-left: 20px;
-  font-size: 145%;
+  flex-direction: column;
   flex-wrap: wrap;
+  font-size: 145%;
+  margin-left: 20px;
 }
 
 .res-list {
@@ -152,15 +149,15 @@ input,
 }
 
 .sep-dates {
+  align-items: baseline;
   display: flex;
   flex-direction: row;
-  align-items: baseline;
 }
 
 .booking-header {
-  font-family: 'Cinzel', serif;
-  text-align: center;
+  font-family: $header-font;
   font-size: 200%;
+  text-align: center;
 }
 
 .booking-block {
@@ -169,45 +166,107 @@ input,
   width: 200px;
 }
 
+.mgr-find-user,
 .input-container {
+  align-items: center;
   display: flex;
+  flex-direction: column;
+  margin: auto auto 3% 25%;
+  text-align: center;
+  width: 50%;
 }
 
 .filter-btn,
 .find-room-btn {
-  height: 40px;
   background-color: $dark-blue-bg;
-  font-size: 100%;
   border-radius: 3px;
+  border: 2px solid $title-color;
+  font-size: 100%;
+  height: 40px;
+  margin-top: 10px;
+  width: 199px;
 }
 
+.delete-btn,
+.mgr-find-res-btn {
+  background-color: $dark-olive-color;
+  border-radius: 3px;
+  border: 2px solid $title-color;
+  font-size: 100%;
+  height: 40px;
+  margin-top: 10px;
+  width: 244px;
+}
+
+.filter-input,
 .start-date-input {
-  height: 35px;
   border-radius: 4px;
+  border: 3px solid #26272D;
+  height: 35px;
 }
 
 #display-filtered,
 #display-rooms {
+  align-items: flex-start;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: flex-start;
+}
+
+.filter-room-type {
+  display: flex;
+  flex-direction: column;
 }
 
 .individual-room {
-  width: 200px;
-  overflow-wrap: normal;
   border: 2px solid $title-color;
   margin: 4px;
+  overflow-wrap: normal;
   padding: 4px;
+  width: 200px;
 }
 
 .individual-room:hover {
-  cursor: pointer;
   box-shadow: 8px 8px 4px gray;
+  cursor: pointer;
 }
 
 .book-room-section {
   text-align: center;
+}
+
+.book-this-room {
+  background-color: $dark-blue-bg;
+}
+
+.manager-activity {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.delete-header {
+  font-family: $header-font;
+  font-size: 180%;
+  margin-top: 0;
+  text-align: center;
+}
+
+.mgr-customer-reservations {
+  border: 1px solid $title-color;
+  border-radius: 3px;
+}
+
+.find-res-text {
+  font-size: 120%;
+}
+
+.mgr-id-input {
+  border-radius: 3px;
+  border: 3px solid $dark-olive-color;
+  color: $dark-olive-color;
+  font-size: 15px;
+  padding: 5px;
+  width: 232px;
 }

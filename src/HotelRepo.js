@@ -13,7 +13,7 @@ class HotelRepo {
     let allRes = this.findCustomerReservationHistory(id)
     return this.rooms.reduce( (acc, room) => {
       allRes.forEach( res => {
-        if(res.roomNumber === room.number) {
+        if (res.roomNumber === room.number) {
           acc += room.costPerNight
         }
       })

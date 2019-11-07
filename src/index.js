@@ -2,8 +2,8 @@ import $ from 'jquery';
 import './css/base.scss';
 import Bookings from './Bookings'
 import HotelRepo from './HotelRepo';
-
-// import './images/turing-logo.png'
+import Customer from './Customer'
+import Manager from './Manager';
 
 const bookingsPromise = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings')
   .then(response => response.json());
@@ -12,13 +12,15 @@ const customerPromise = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/190
 const roomsPromise = fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/rooms/rooms')
   .then(response => response.json());
 
-
 let roomsData;
 let bookingsData;
 let customerData;
 let hotelRepo;
 let bookings;
 let customerId;
+let roomNumber;
+let customer;
+let manager;
 
 Promise.all([roomsPromise, bookingsPromise, customerPromise])
   .then(data => {
@@ -27,7 +29,8 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
     customerData = data[2].users;
 
 
-    bookings = new Bookings(bookingsData, roomsData, customerData)
+    manager = new Manager(customerData, bookingsData, roomsData)
+    bookings = new Bookings(bookingsData, roomsData)
     hotelRepo = new HotelRepo(bookingsData, roomsData, customerData)
     let date = getDate();
     let today = new Date();
@@ -45,24 +48,35 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
     // $('.login-screen').hide();
     $('.customer-view').hide();
     $('.manager-view').hide();
+    $('.filter-room-type').hide();
 
+    $('.rooms-available').text(`${bookings.findNumberOfAvailableRooms(date)} rooms`);
+    $('.display-todays-date').text(`${formattedDate}`)
+    $('.occupancy-rate').text(`${bookings.findPercentRoomsBooked(date)}  %`);
+    $('.daily-revenue').text(`$ ${bookings.findTodaysRoomsRevenue(date)}`);
     $('#manager-login-btn').click(directToChosenPage);
     $('#customer-login-btn').click(directToChosenPage);
+    $('.book-room-section').click(postBooking);
+    $('.mgr-find-res-btn').click(findCustomerReservations)
 
-    $('.display-todays-date').text(`${formattedDate}`)
-    $('.rooms-available').text(`${bookings.findNumberOfAvailableRooms('2019/09/30')} rooms`);
-    $('.occupancy-rate').text(`${bookings.findPercentRoomsBooked('2019/09/30')}  %`)
-    $('.daily-revenue').text(`$ ${bookings.findTotalRevenueForDate('2019/09/30')}`)
+    function findName(id) {
+      let customer = customerData.find(customer => customer.id === id)
+      return customer.name
+    }
 
     function captureCustomerId() {
       if ($('#email-input').val().includes('customer')) {
-        customerId = ($('#email-input').val().slice(8, 10) * 1)
-      };
+        customerId = ($('#email-input').val().slice(8, 10) * 1);
+        localStorage.setItem("customerId", customerId);
+        let name = findName(customerId);
+        customer = new Customer(customerId, name)
+      }
       return customerId
     }
 
     function directToChosenPage(event) {
       captureCustomerId();
+      customerId = JSON.parse(localStorage.getItem("customerId"))
       let email = $('#email-input').val();
       let password = $('#password-input').val()
       if (event.target.id === 'manager-login-btn') {
@@ -70,10 +84,10 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
           $('.login-screen').hide();
           $('.manager-view').show();
         }
-      };
+      }
       if (event.target.id === 'customer-login-btn') {
 
-        if (email === 'customer50' && password === 'overlook2019') {
+        if (email === 'customer20' && password === 'overlook2019') {
           $('.login-screen').hide();
           $('.customer-view').show();
         }
@@ -87,15 +101,12 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       let dd = today.getDate();
       let mm = today.getMonth() + 1;
       let yyyy = today.getFullYear();
-
       if (dd < 10) {
         dd = '0' + dd
       }
-
       if (mm < 10) {
         mm = '0' + mm
       }
-
       let thisDay = yyyy + '/' + mm + '/' + dd;
       return thisDay;
     }
@@ -114,7 +125,6 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
         return +(`${year}${month}${day}`);
       }
     }
-
 
     function stringifyDate(date) {
       let splitDate = date.toString().split('');
@@ -139,7 +149,7 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       } else {
         return false;
       }
-    };
+    }
 
     function showReservationDates(id) {
       let bookings = hotelRepo.findCustomerReservationHistory(id);
@@ -147,16 +157,27 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       return sortDates(datesBooked).join(' | ')
     }
 
+    function showBookingError() {
+      if (bookings.findNumberOfAvailableRooms() < 1) {
+        $('.error-box').attr('hidden', false)
+      }
+      if (bookings.filterByRoomType(date).length < 1) {
+        $('.error-box').attr('hidden', false)
+      }
+    }
+
     function displayAvailableRooms(date) {
       let available = bookings.findAllRoomsAvailable(date)
       available.forEach(room => {
+        roomNumber = room.number
         $('#display-rooms').append(
-          `<b id='${room.number}'></b>
-      <div class='individual-room'>
+          `<div class='individual-room' id='${room.number}'>
+      <h4>Room Number</b> : ${room.number}</h4>
       <h4>Room Type</b> : ${room.roomType}</h4>
       <h4>Number Of Beds</b> : ${room.numBeds}</h4>
       <h4>Bed Size</b> : ${room.bedSize}</h4>
       <h4>Price</b> : $ ${room.costPerNight}<h4/>
+      <button class='book-this-room'>BOOK</button>
       </div>
       <br/>`
         )
@@ -178,6 +199,8 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       `
         )
       }
+      $('.booking-block').addClass('filter-on-top')
+      $('.filter-room-type').show();
     });
 
 
@@ -187,48 +210,81 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       let date = stringifyDate(numDate);
       let filteredRooms = bookings.filterByRoomType(date, $('.filter-input').val());
       filteredRooms.forEach(room => {
+        roomNumber = room.number
         $('#display-filtered').append(
-          `<b id='${room.number}'></b>
-        <div class='individual-room' type='submit'>
+          `<div class='individual-room' id='${room.number}' type='submit'>
+        <h4>Room Number : ${room.number} 
         <h4>Room Type</b> : ${room.roomType}</h4>
         <h4>Number Of Beds</b> : ${room.numBeds}</h4>
         <h4>Bed Size</b> : ${room.bedSize}</h4>
         <h4>Price</b> : $ ${room.costPerNight}<h4/>
+        <button class='book-this-room'>BOOK</button>
         </div>
         <br/>`
         )
       })
       $('.booking-block').hide()
+      $('filter-room-type').show()
+      $('#display-rooms').hide();
     })
 
-
-    function postBooking() {
+    function postBooking(e) {
       let dateInput = $('.start-date-input').val()
       let numDate = parseDate(dateInput, '-');
       let bookedDate = stringifyDate(numDate);
-      let roomNumber = +($('.clicked').html().split('x')[1]);
-      let postData = bookingsRepository.makeBooking(customerId, bookedDate, roomNumber);
-      console.log($('.clicked').html())
-      fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(postData)
-      })
-        .then(() => console.log('room booked'))
-        .catch(error => {
-          console.log(error);
-        });
+      let customerId = JSON.parse(localStorage.getItem("customerId"))
+      let postData = bookings.createBooking(customerId, bookedDate, roomNumber);
+      if (e.target.className && e.target.className === 'book-this-room') {
+        fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1904/bookings/bookings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(postData)
+        })
+          .then(() => console.log('room booked'))
+          .then(() => hotelRepo.findCustomerReservationHistory(customerId).push(postData))
+          .catch(error => {
+            console.log(error);
+          });
+      }
     }
 
-    $('.individual-room').click(postBooking)
+    $('.manager-activity').click(e => {
+      if (e.target.className && e.target.className === 'delete-btn') {
+        let bookingObject = {}
+        console.log(e.target.parentNode)
+        bookingObject.id = +(parseInt(e.target.id));
+        manager.deleteBooking(bookingObject);
+        e.target.parentNode.remove()
+      }
+    });
+
+    function findCustomerReservations() {
+      let idValue = +($('.mgr-id-input').val())
+      $('.mgr-id-input').val('')
+      findReservationsToDelete(idValue).forEach(reservation => {
+        $('.mgr-reservations-list').append(
+          `<div class='mgr-customer-reservations'>
+        <h4>Room Number : ${reservation.roomNumber} 
+        <h4>Date</b> : ${reservation.date}</h4>
+        <button class='delete-btn' id='${reservation.id}'>Cancel</button>
+        </div>
+        <br/>`)
+      })
+    }
+
+    function findReservationsToDelete(id) {
+      let rooms = hotelRepo.findCustomerReservationHistory(id).filter(res => {
+        if (res.userID === id) {
+          return res
+        }
+      })
+      return rooms
+    }
 
 
-
-    //////
   });
-////// END OF FETCH
 
 
 

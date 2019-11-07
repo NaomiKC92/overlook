@@ -1,8 +1,7 @@
 class Bookings {
-  constructor(bookings, rooms, roomServices) {
+  constructor(bookings, rooms) {
     this.bookings = bookings;
     this.rooms = rooms;
-    this.roomServices = roomServices
   }
 
   findNumberOfAvailableRooms(date) {
@@ -14,7 +13,7 @@ class Bookings {
     let openRooms = this.bookings.filter( booking => booking.date !== date);
     return openRooms.reduce((acc, openRoom) => {
       this.rooms.forEach(room => {
-        if(openRoom.roomNumber === room.number && !acc.includes(room)) {
+        if (openRoom.roomNumber === room.number && !acc.includes(room)) {
           acc.push(room)
         }
       })
@@ -30,34 +29,19 @@ class Bookings {
   findTodaysRoomsRevenue(date) {
     let roomNums = []
     this.bookings.filter( booking => {
-      if(booking.date === date) {
+      if (booking.date === date) {
         roomNums.push(booking.roomNumber)
       }
     });
     let revenueFromRooms = roomNums.reduce( (acc, room) => {
       this.rooms.map( booked => {
-        if(booked.number === room) {
+        if (booked.number === room) {
           acc += booked.costPerNight
         }
       })
       return acc
     }, 0)
-      return revenueFromRooms
-  }
-
-  findRoomServiceRevenue(date) {
-    return this.roomServices.reduce( (acc, order) => {
-      if(order.date === date) {
-        acc += order.totalCost
-      }
-      return acc
-    }, 0)
-  }
-
-  findTotalRevenueForDate(date) {
-    let roomsRev = this.findTodaysRoomsRevenue(date);
-    let roomServiceRev = this.findRoomServiceRevenue(date);
-    return roomsRev + roomServiceRev
+    return +(revenueFromRooms.toFixed(2))
   }
 
   findPercentRoomsBooked(date) {
@@ -70,11 +54,11 @@ class Bookings {
     return availableRooms.filter( room => room.roomType === type)
   }
 
-
-  createBooking(id, date, room) {
+  createBooking(id, bookDate, room) {
     return {
+      id: Date.now(),
       userID: id,
-      date: date,
+      date: bookDate,
       roomNumber: room
     }
   }

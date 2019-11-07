@@ -3,13 +3,14 @@ const expect = chai.expect;
 
 import testData from '../Data/testData';
 import Bookings from '../src/Bookings';
+import HotelRepo from '../src/HotelRepo';
 
 
 describe('Bookings', () => {
   let bookings;
 
   beforeEach(() => {
-    bookings = new Bookings(testData.bookings, testData.rooms, testData.roomServiceOrders)
+    bookings = new Bookings(testData.bookings, testData.rooms)
   });
 
   it('should be a function', () => {
@@ -21,7 +22,6 @@ describe('Bookings', () => {
   })
 
   it('should return the available rooms for a given date', () => {
-    // console.log('available : ', bookings.findAllRoomsAvailable('2019/09/30'))
     expect(bookings.findAllRoomsAvailable('2019/09/30').length).to.equal(25)
   });
 
@@ -33,20 +33,21 @@ describe('Bookings', () => {
     expect(bookings.findTodaysRoomsRevenue('2019/09/30')).to.equal(572.48)
   });
 
-  it('should return roomService revenue for a given date', () => {
-    expect(bookings.findRoomServiceRevenue('2019/09/30')).to.equal(33.74)
-  })
-
-  it('should return the total revenue for a given date', () => {
-    expect(bookings.findTotalRevenueForDate('2019/09/30')).to.equal(606.22)
-  })
-
   it('should return the percentage of rooms booked for the day', () => {
     expect(bookings.findPercentRoomsBooked('2019/09/30')).to.equal(6.7)
   })
 
-  it.only('should return rooms by type searched for', () => {
+  it('should return rooms by type searched for', () => {
     expect(bookings.filterByRoomType('2019/09/30', 'suite').length).to.equal(5)
   })
+
+  it('should return an object with the user\'s data who the room was booked for', () => {
+    expect(bookings.createBooking(8, '2019/09/30', 23)).to.eql({
+      userID: 8,
+      date: '2019/09/30',
+      roomNumber: 23
+    })
+  })
+
 
 })
