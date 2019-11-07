@@ -45,9 +45,9 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
     };
     const formattedDate = dateObject.toLocaleString('en', options)
 
-    $('.login-screen').hide();
+    // $('.login-screen').hide();
     $('.customer-view').hide();
-    // $('.manager-view').hide();
+    $('.manager-view').hide();
     $('.filter-room-type').hide();
 
     $('.rooms-available').text(`${bookings.findNumberOfAvailableRooms(date)} rooms`);
@@ -70,7 +70,7 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
         localStorage.setItem("customerId", customerId);
         let name = findName(customerId);
         customer = new Customer(customerId, name)
-      };
+      }
       return customerId
     }
 
@@ -84,7 +84,7 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
           $('.login-screen').hide();
           $('.manager-view').show();
         }
-      };
+      }
       if (event.target.id === 'customer-login-btn') {
 
         if (email === 'customer20' && password === 'overlook2019') {
@@ -149,7 +149,7 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       } else {
         return false;
       }
-    };
+    }
 
     function showReservationDates(id) {
       let bookings = hotelRepo.findCustomerReservationHistory(id);
@@ -161,7 +161,7 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       if (bookings.findNumberOfAvailableRooms() < 1) {
         $('.error-box').attr('hidden', false)
       }
-      if (bookings.filterByRoomType(date, type).length < 1) {
+      if (bookings.filterByRoomType(date).length < 1) {
         $('.error-box').attr('hidden', false)
       }
     }

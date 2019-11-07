@@ -21,5 +21,4 @@ describe('Manager', () => {
     expect(manager.roomsData).to.eql(testData.rooms);
   });
 
-
 })
