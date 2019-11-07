@@ -32,20 +32,20 @@ describe('Bookings', () => {
     expect(bookings.findTodaysRoomsRevenue('2019/09/30')).to.equal(572.48)
   });
 
-  it('should return roomService revenue for a given date', () => {
-    expect(bookings.findRoomServiceRevenue('2019/09/30')).to.equal(33.74)
-  })
-
-  it('should return the total revenue for a given date', () => {
-    expect(bookings.findTotalRevenueForDate('2019/09/30')).to.equal(606.22)
-  })
-
   it('should return the percentage of rooms booked for the day', () => {
     expect(bookings.findPercentRoomsBooked('2019/09/30')).to.equal(6.7)
   })
 
   it('should return rooms by type searched for', () => {
     expect(bookings.filterByRoomType('2019/09/30', 'suite').length).to.equal(5)
+  })
+
+  it('should return an object with the user\'s data who the room was booked for', () => {
+    expect(bookings.createBooking(8, '2019/09/30', 23)).to.eql({
+      userID: 8,
+      date: '2019/09/30',
+      roomNumber: 23
+    })
   })
 
 })

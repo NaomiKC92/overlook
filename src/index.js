@@ -27,7 +27,7 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
     customerData = data[2].users;
 
 
-    bookings = new Bookings(bookingsData, roomsData, customerData)
+    bookings = new Bookings(bookingsData, roomsData)
     hotelRepo = new HotelRepo(bookingsData, roomsData, customerData)
     let date = getDate();
     let today = new Date();
@@ -46,7 +46,7 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
     $('.customer-view').hide();
     // $('.manager-view').hide();
 
-    console.log(date)
+
     $('#manager-login-btn').click(directToChosenPage);
     $('#customer-login-btn').click(directToChosenPage);
 
@@ -223,7 +223,6 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       $('.booking-block').hide()
     })
 
-
     function postBooking(e) {
       let dateInput = $('.start-date-input').val()
       let numDate = parseDate(dateInput, '-');
@@ -247,6 +246,15 @@ Promise.all([roomsPromise, bookingsPromise, customerPromise])
       }
     }
     $('.book-room-section').click(postBooking)
+
+
+    $('.mgr-find-res-btn').click(findCustomerReservations)
+
+    function findCustomerReservations() {
+      let idValue = +($('.mgr-id-input').val())
+      $('.mgr-reservations-list').text(showReservationDates(idValue));
+      $('.mgr-id-input').val('')
+    }
 
 
   });

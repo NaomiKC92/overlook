@@ -1,8 +1,7 @@
 class Bookings {
-  constructor(bookings, rooms, roomServices) {
+  constructor(bookings, rooms) {
     this.bookings = bookings;
     this.rooms = rooms;
-    this.roomServices = roomServices;
   }
 
   findNumberOfAvailableRooms(date) {
@@ -42,12 +41,11 @@ class Bookings {
       })
       return acc
     }, 0)
-      return revenueFromRooms.toFixed(2)
+      return +(revenueFromRooms.toFixed(2))
   }
 
   findPercentRoomsBooked(date) {
     let bookedRooms = this.bookings.filter( booking => booking.date === date)
-    console.log(bookedRooms)
     return +((bookedRooms.length / this.rooms.length) * 100).toFixed(1)
   }
 
@@ -61,7 +59,6 @@ class Bookings {
       userID: id,
       date: date,
       roomNumber: room
-
     }
   }
 
