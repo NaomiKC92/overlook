@@ -25,3 +25,4 @@ Overlook is a hotel reservation app that allows the user, either a manager or cu
 ### Screenhots
 ![Login-screen](src/images/login-screen.png)
 ![Customer-view](src/images/customer-view.png)
+![Manager-view](src/images/manager-view.png)
