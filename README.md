@@ -22,7 +22,7 @@ Overlook is a hotel reservation app that allows the user, either a manager or cu
   - Manager username: 'manager' password: 'overlook2019'
   - Customer username: 'customer50' password: 'overlook2019'
   
-### Screenhots
+### Screenshots
 ![Login-screen](src/images/login-screen.png)
 ![Customer-view](src/images/customer-view.png)
 ![Manager-view](src/images/manager-view.png)
